@@ -33,16 +33,14 @@ Le funzionalità richieste sono:
                 if(votoTemp > 60)
                 {
                     studenti[NumStudenti] = new NuoviDiplomati(votoTemp);
-                    Console.WriteLine("Abile: " + studenti[NumStudenti].Abile());
-                    NumStudenti++;
                 }
                 else
                 {
                     studenti[NumStudenti] = new VecchiDiplomati(votoTemp);
-                    Console.WriteLine("Abile: " + studenti[NumStudenti].Abile());
-                    NumStudenti++;
                 }
 
+                Console.WriteLine("Abile: " + studenti[NumStudenti].Abile());
+                NumStudenti++;
                 //Console.WriteLine("Inserire il voto dello studente che si vuole aggiungere. Se non ne si vuole aggiungere altri inserire \"-1\"");
                 votoTemp = int.Parse(Console.ReadLine());
             }
@@ -77,14 +75,7 @@ Le funzionalità richieste sono:
 
         public virtual bool Abile()
         {
-            if (Voto >= 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return true;
         }
     }
     
