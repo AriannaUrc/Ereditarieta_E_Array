@@ -70,6 +70,7 @@ Le funzionalità richieste sono:
     class Diplomati
     {
         private int voto;
+        bool abile;
 
         //costruttore senza parametri
         public Diplomati()
@@ -82,14 +83,15 @@ Le funzionalità richieste sono:
         {
             this.voto = voto;
         }
-
+        
+        public bool Abile { get { return abile; } set { abile = value; } } 
         public int Voto { get { return voto; } set { voto = value; } }
     }
     
 
     class VecchiDiplomati : Diplomati
     {
-        bool abile;
+        
 
         //costruttore senza parametri
         public VecchiDiplomati()
@@ -102,63 +104,82 @@ Le funzionalità richieste sono:
         //costruttore con parametri
         public VecchiDiplomati(int voto)
         {
-            if(voto >= 0 && voto < 60)
-            {
-                this.Voto = voto;
-                if (voto >= 42)
-                {
-                    Abile = true;
-                }
-                else
-                {
-                    Abile = false;
-                }
-            }
-            else
-            {
-                this.Voto = 60;
-                Abile = false;
-            }
+            Voto_Vecchio = voto;
 
         }
 
-        public bool Abile { get { return abile;} set { abile = value; } }
+        public int Voto_Vecchio { 
+            get {
+                return Voto; 
+            } 
+            
+            set {
+                if (value >= 0 && value < 60)
+                {
+                    this.Voto = value;
+                    if (value >= 42)
+                    {
+                        Abile = true;
+                    }
+                    else
+                    {
+                        Abile = false;
+                    }
+                }
+                else
+                {
+                    this.Voto = 60;
+                    Abile = false;
+                }
+            } 
+        }
     }
 
     class NuoviDiplomati : Diplomati
     {
-        bool abile;
 
         //costruttore senza parametri
         public NuoviDiplomati()
         {
             this.Voto = 60;
-            abile = false;
+            Abile = false;
         }
 
         //costruttore con parametri
         public NuoviDiplomati(int voto)
         {
-            if (voto > 60 && voto <= 100)
-            {
-                this.Voto = voto;
+            Voto_Nuovo = voto;
+        }
 
-                if (voto >= 70)
+        public int Voto_Nuovo
+        {
+            get
+            {
+                return Voto;
+            }
+
+            set
+            {
+                if (value > 60 && value <= 100)
                 {
-                    this.Abile = true;
+                    this.Voto = value;
+
+                    if (value >= 70)
+                    {
+                        this.Abile = true;
+                    }
+                    else
+                    {
+                        this.Abile = false;
+                    }
                 }
                 else
                 {
-                    this.Abile = false;
+                    this.Voto = 60;
+                    Abile = false;
                 }
             }
-            else
-            {
-                this.Voto = 60;
-                Abile = false;
-            }
         }
-        public bool Abile { get { return abile; } set { abile = value; } }
     }
 
 }
