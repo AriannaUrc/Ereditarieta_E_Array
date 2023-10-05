@@ -19,12 +19,10 @@ Le funzionalità richieste sono:
         static void Main(string[] args)
         {
             //arrai di diplomati
-            NuoviDiplomati[] studentiNuovi = new NuoviDiplomati[100];
-            VecchiDiplomati[] studentiVecchi = new VecchiDiplomati[100];
+            Diplomati[] studenti = new Diplomati[100];
 
             //variabile che conta il numero di studenti inseriti
-            int NumStudentiVecchi = 0;
-            int NumStudentiNuovi = 0;
+            int NumStudenti = 0;
 
             int votoTemp;
             Console.WriteLine("Inserire il voto dello studente che si vuole aggiungere. Se non ne si vuole aggiungere altri inserire \"-1\"");
@@ -34,58 +32,60 @@ Le funzionalità richieste sono:
             {
                 if(votoTemp > 60)
                 {
-                    studentiNuovi[NumStudentiNuovi] = new NuoviDiplomati(votoTemp);
-                    Console.WriteLine("Abile: " + studentiNuovi[NumStudentiNuovi].Abile);
-                    NumStudentiNuovi++;
+                    studenti[NumStudenti] = new NuoviDiplomati(votoTemp);
+                    Console.WriteLine("Abile: " + studenti[NumStudenti].Abile());
+                    NumStudenti++;
                 }
                 else
                 {
-                    studentiVecchi[NumStudentiVecchi] = new VecchiDiplomati(votoTemp);
-                    Console.WriteLine("Abile: " + studentiVecchi[NumStudentiVecchi].Abile);
-                    NumStudentiVecchi++;
+                    studenti[NumStudenti] = new VecchiDiplomati(votoTemp);
+                    Console.WriteLine("Abile: " + studenti[NumStudenti].Abile());
+                    NumStudenti++;
                 }
 
                 //Console.WriteLine("Inserire il voto dello studente che si vuole aggiungere. Se non ne si vuole aggiungere altri inserire \"-1\"");
                 votoTemp = int.Parse(Console.ReadLine());
             }
 
-            Console.WriteLine("\nNumStudentiVecchi: " + NumStudentiVecchi);
-            Console.WriteLine("NumStudentiNuovi: "+ NumStudentiNuovi + "\n\n");
 
-            Console.WriteLine("Lista Studenti abili: ");
-            for(int i = 0; i < NumStudentiVecchi; i++)
+            Console.WriteLine("\nLista Studenti abili: ");
+            for(int i = 0; i < NumStudenti; i++)
             {
-                if (studentiVecchi[i].Abile)
-                    Console.WriteLine(studentiVecchi[i].Voto);
-            }
-
-            for (int i = 0; i < NumStudentiNuovi; i++)
-            {
-                if (studentiNuovi[i].Abile)
-                    Console.WriteLine(studentiNuovi[i].Voto);
+                if (studenti[i].Abile())
+                    Console.WriteLine(studenti[i].Voto);
             }
         }
     }
 
     class Diplomati
     {
-        private int voto;
-        bool abile;
+        private int _voto;
 
         //costruttore senza parametri
         public Diplomati()
         {
-            voto = 0;
+            Voto = 0;
         }
 
         //costruttore con parametri
         public Diplomati(int voto)
         {
-            this.voto = voto;
+            this.Voto = voto;
         }
         
-        public bool Abile { get { return abile; } set { abile = value; } } 
-        public int Voto { get { return voto; } set { voto = value; } }
+        public int Voto { get { return _voto; } set { _voto = value; } }
+
+        public virtual bool Abile()
+        {
+            if (Voto >= 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
     
 
@@ -97,7 +97,6 @@ Le funzionalità richieste sono:
         public VecchiDiplomati()
         {
             this.Voto = 0;
-            Abile = false;
 
         }
 
@@ -117,21 +116,24 @@ Le funzionalità richieste sono:
                 if (value >= 0 && value < 60)
                 {
                     this.Voto = value;
-                    if (value >= 42)
-                    {
-                        Abile = true;
-                    }
-                    else
-                    {
-                        Abile = false;
-                    }
                 }
                 else
                 {
-                    this.Voto = 60;
-                    Abile = false;
+                    this.Voto = 0;
                 }
             } 
+        }
+
+        public override bool Abile()
+        {
+            if (Voto >= 42)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 
@@ -142,7 +144,6 @@ Le funzionalità richieste sono:
         public NuoviDiplomati()
         {
             this.Voto = 60;
-            Abile = false;
         }
 
         //costruttore con parametri
@@ -163,21 +164,25 @@ Le funzionalità richieste sono:
                 if (value > 60 && value <= 100)
                 {
                     this.Voto = value;
-
-                    if (value >= 70)
-                    {
-                        this.Abile = true;
-                    }
-                    else
-                    {
-                        this.Abile = false;
-                    }
                 }
                 else
                 {
                     this.Voto = 60;
-                    Abile = false;
                 }
+            }
+
+
+        }
+
+        public override bool Abile()
+        {
+            if (Voto >= 70)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }
